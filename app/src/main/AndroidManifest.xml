@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.C11Assistant">
 
-        <activity android:name=".ui.MainActivity" android:exported="true">
+        <activity android:name=".ui.MainActivity" android:exported="true" android:screenOrientation="landscape" android:resizeableActivity="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
