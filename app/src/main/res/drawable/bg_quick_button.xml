@@ -1,0 +1,8 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <shape><corners android:radius="18dp"/><solid android:color="@color/c11_accent_pressed"/></shape>
+    </item>
+    <item>
+        <shape><corners android:radius="18dp"/><solid android:color="@color/c11_accent"/></shape>
+    </item>
+</selector>

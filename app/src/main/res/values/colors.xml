@@ -1,0 +1,10 @@
+<resources>
+    <color name="c11_bg">#10151F</color>
+    <color name="c11_panel">#1A2232</color>
+    <color name="c11_card">#202B3E</color>
+    <color name="c11_accent">#3EA6FF</color>
+    <color name="c11_accent_pressed">#2B86D6</color>
+    <color name="c11_text_primary">#F2F6FF</color>
+    <color name="c11_text_secondary">#B7C6E0</color>
+    <color name="c11_feedback">#263248</color>
+</resources>
