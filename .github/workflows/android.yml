@@ -13,9 +13,10 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: 构建并缓存
+      - name: 构建 APK (指定 Gradle 版本)
         uses: gradle/actions/setup-gradle@v3
         with:
+          gradle-version: '8.2'
           arguments: assembleDebug
 
       - name: 上传 APK
