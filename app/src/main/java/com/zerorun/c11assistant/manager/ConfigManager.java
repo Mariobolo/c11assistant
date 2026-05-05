@@ -3,9 +3,14 @@ package com.zerorun.c11assistant.manager;
 import android.content.Context;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,7 +24,18 @@ public class ConfigManager {
         try {
             File f = new File(context.getFilesDir(), FILE_NAME);
             if (!f.exists()) return createDefault();
-            String json = Files.readString(f.toPath(), StandardCharsets.UTF_8);
+
+            StringBuilder sb = new StringBuilder();
+            try (FileInputStream fis = new FileInputStream(f);
+                 InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8);
+                 BufferedReader br = new BufferedReader(isr)) {
+                String line;
+                while ((line = br.readLine()) != null) {
+                    sb.append(line).append('\n');
+                }
+            }
+
+            String json = sb.toString();
             return new JSONObject(json);
         } catch (Exception e) {
             return createDefault();
@@ -28,7 +44,12 @@ public class ConfigManager {
 
     public void save(JSONObject obj) {
         try {
-            Files.writeString(new File(context.getFilesDir(), FILE_NAME).toPath(), obj.toString(2), StandardCharsets.UTF_8);
+            File out = new File(context.getFilesDir(), FILE_NAME);
+            try (FileOutputStream fos = new FileOutputStream(out, false);
+                 OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8);
+                 BufferedWriter bw = new BufferedWriter(osw)) {
+                bw.write(obj.toString(2));
+            }
         } catch (Exception ignored) {}
     }
 
