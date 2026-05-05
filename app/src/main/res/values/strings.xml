@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">C11副屏助手</string>
+    <string name="service_channel">C11后台服务</string>
+</resources>
