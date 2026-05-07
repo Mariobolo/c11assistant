@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "com.zerorun.c11assistant"
-        minSdk 28
+        minSdk 24
         targetSdk 34
         versionCode 1
         versionName "1.0.0"

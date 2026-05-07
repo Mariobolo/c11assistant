@@ -1,4 +1,24 @@
 <resources>
-    <string name="app_name">C11副屏助手</string>
+    <string name="app_name">C11车机助手</string>
     <string name="service_channel">C11后台服务</string>
+
+    <string name="tab_quick_actions">快捷动作</string>
+    <string name="tab_settings">设置</string>
+    <string name="tab_about">关于</string>
+
+    <string name="quick_start_service">启动后台服务</string>
+    <string name="quick_exec_main">执行主屏任务</string>
+    <string name="quick_exec_sub">执行副屏任务</string>
+    <string name="quick_overlay">开启悬浮窗权限</string>
+    <string name="quick_export">导出配置</string>
+    <string name="quick_import">导入配置</string>
+
+    <string name="full_action_list">完整动作列表</string>
+    <string name="ready">系统就绪，等待操作</string>
+    <string name="about_text">零跑 C11 车机操作助手\n大按钮、大字体、驾驶友好界面</string>
+
+    <string name="setting_auto_start">开机自动启动服务</string>
+    <string name="setting_show_feedback">显示操作反馈提示</string>
+    <string name="setting_large_touch">增强触控模式</string>
+    <string name="setting_skip_running">跳过运行中应用</string>
 </resources>
