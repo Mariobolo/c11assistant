@@ -3,12 +3,12 @@ plugins {
 }
 
 android {
-    namespace 'com.zerorun.c11assistant'
+    namespace 'com.leapmotor.c11assistant'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.zerorun.c11assistant"
-        minSdk 28
+        applicationId "com.leapmotor.c11assistant"
+        minSdk 24
         targetSdk 34
         versionCode 1
         versionName "1.0.0"

@@ -1,4 +1,4 @@
-package com.zerorun.c11assistant.manager;
+package com.leapmotor.c11assistant.manager;
 
 import android.content.Context;
 import org.json.JSONArray;

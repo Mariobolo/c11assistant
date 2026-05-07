@@ -1,4 +1,4 @@
-package com.zerorun.c11assistant.ui;
+package com.leapmotor.c11assistant.ui;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,11 +15,11 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.zerorun.c11assistant.R;
-import com.zerorun.c11assistant.manager.ConfigManager;
-import com.zerorun.c11assistant.model.ActionItem;
-import com.zerorun.c11assistant.model.ScreenConfig;
-import com.zerorun.c11assistant.service.C11ForegroundService;
+import com.leapmotor.c11assistant.R;
+import com.leapmotor.c11assistant.manager.ConfigManager;
+import com.leapmotor.c11assistant.model.ActionItem;
+import com.leapmotor.c11assistant.model.ScreenConfig;
+import com.leapmotor.c11assistant.service.C11ForegroundService;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.io.File;
