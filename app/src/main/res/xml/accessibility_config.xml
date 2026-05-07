@@ -4,4 +4,4 @@
     android:canRetrieveWindowContent="true"
     android:notificationTimeout="100"
     android:canPerformGestures="true"
-    android:settingsActivity="com.zerorun.c11assistant.ui.MainActivity" />
+    android:settingsActivity="com.leapmotor.c11assistant.ui.MainActivity" />

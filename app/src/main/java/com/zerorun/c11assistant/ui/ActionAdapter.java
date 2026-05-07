@@ -1,4 +1,4 @@
-package com.zerorun.c11assistant.ui;
+package com.leapmotor.c11assistant.ui;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -6,8 +6,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.zerorun.c11assistant.R;
-import com.zerorun.c11assistant.model.ActionItem;
+import com.leapmotor.c11assistant.R;
+import com.leapmotor.c11assistant.model.ActionItem;
 import java.util.List;
 
 public class ActionAdapter extends RecyclerView.Adapter<ActionAdapter.ActionVH> {

@@ -1,4 +1,4 @@
-package com.zerorun.c11assistant.model;
+package com.leapmotor.c11assistant.model;
 
 import java.util.ArrayList;
 import java.util.List;

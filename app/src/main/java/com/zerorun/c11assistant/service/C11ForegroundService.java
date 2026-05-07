@@ -1,4 +1,4 @@
-package com.zerorun.c11assistant.service;
+package com.leapmotor.c11assistant.service;
 
 import android.app.*;
 import android.content.Context;
@@ -11,8 +11,8 @@ import android.os.Looper;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import androidx.annotation.Nullable;
-import com.zerorun.c11assistant.manager.ConfigManager;
-import com.zerorun.c11assistant.ui.MainActivity;
+import com.leapmotor.c11assistant.manager.ConfigManager;
+import com.leapmotor.c11assistant.ui.MainActivity;
 import org.json.JSONObject;
 
 public class C11ForegroundService extends Service {
@@ -57,7 +57,7 @@ public class C11ForegroundService extends Service {
 
     private void ensureChannel() {
         NotificationManager nm = getSystemService(NotificationManager.class);
-        NotificationChannel ch = new NotificationChannel(CHANNEL, getString(com.zerorun.c11assistant.R.string.service_channel), NotificationManager.IMPORTANCE_MIN);
+        NotificationChannel ch = new NotificationChannel(CHANNEL, getString(com.leapmotor.c11assistant.R.string.service_channel), NotificationManager.IMPORTANCE_MIN);
         ch.setShowBadge(false);
         ch.setSound(null, null);
         nm.createNotificationChannel(ch);

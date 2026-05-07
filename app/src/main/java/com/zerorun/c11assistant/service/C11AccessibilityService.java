@@ -1,4 +1,4 @@
-package com.zerorun.c11assistant.service;
+package com.leapmotor.c11assistant.service;
 
 import android.accessibilityservice.AccessibilityService;
 import android.view.accessibility.AccessibilityEvent;
