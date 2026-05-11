@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.leapmotor.c11assistant">
+>
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
@@ -35,6 +35,12 @@
         <service
             android:name=".service.C11ForegroundService"
             android:foregroundServiceType="dataSync"
+            android:enabled="true"
+            android:exported="false" />
+
+
+        <service
+            android:name=".service.LogcatMonitorService"
             android:enabled="true"
             android:exported="false" />
 

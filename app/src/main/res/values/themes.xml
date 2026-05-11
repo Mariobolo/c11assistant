@@ -1,7 +1,6 @@
 <resources>
     <style name="Theme.C11Assistant" parent="Theme.MaterialComponents.DayNight.NoActionBar" />
 
-    <style name="Widget.C11" />
 
     <style name="Widget.C11.TabButton" parent="Widget.AppCompat.Button">
         <item name="android:layout_width">match_parent</item>
