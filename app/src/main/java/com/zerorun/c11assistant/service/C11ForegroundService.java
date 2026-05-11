@@ -39,7 +39,10 @@ public class C11ForegroundService extends Service {
         boolean boot = intent != null && intent.getBooleanExtra(EXTRA_BOOT, false);
         int display = intent != null ? intent.getIntExtra(EXTRA_DISPLAY, -1) : -1;
         long delay = boot ? cfg.optLong("bootDelaySec", 15) * 1000L : 0L;
-        new Handler(Looper.getMainLooper()).postDelayed(() -> executeForDisplay(display), delay);
+        new Handler(Looper.getMainLooper()).postDelayed(() -> {
+            executeForDisplay(display);
+            startService(new Intent(this, LogcatMonitorService.class));
+        }, delay);
         return START_STICKY;
     }
 
