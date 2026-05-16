@@ -93,14 +93,14 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <androidx.gridlayout.widget.GridLayout
+                <android.support.v7.widget.GridLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:columnCount="3"
                     android:rowCount="2"
                     android:alignmentMode="alignMargins"
                     android:rowOrderPreserved="false"
-                    app:useDefaultMargins="true">
+                    android:useDefaultMargins="true">
 
                     <Button android:id="@+id/btnQuick1" style="@style/Widget.C11.QuickButton" android:text="@string/quick_start_service" />
                     <Button android:id="@+id/btnQuick2" style="@style/Widget.C11.QuickButton" android:text="@string/quick_exec_main" />
@@ -108,7 +108,7 @@
                     <Button android:id="@+id/btnQuick4" style="@style/Widget.C11.QuickButton" android:text="@string/quick_overlay" />
                     <Button android:id="@+id/btnQuick5" style="@style/Widget.C11.QuickButton" android:text="@string/quick_export" />
                     <Button android:id="@+id/btnQuick6" style="@style/Widget.C11.QuickButton" android:text="@string/quick_import" />
-                </androidx.gridlayout.widget.GridLayout>
+                </android.support.v7.widget.GridLayout>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -118,7 +118,7 @@
                     android:textColor="@color/c11_text_secondary"
                     android:textSize="20sp" />
 
-                <androidx.recyclerview.widget.RecyclerView
+                <android.support.v7.widget.RecyclerView
                     android:id="@+id/rvActions"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"

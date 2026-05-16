@@ -1,5 +1,5 @@
 <resources>
-    <style name="Theme.C11Assistant" parent="Theme.MaterialComponents.DayNight.NoActionBar" />
+    <style name="Theme.C11Assistant" parent="Theme.AppCompat.Light.NoActionBar" />
 
 
     <style name="Widget.C11.TabButton" parent="Widget.AppCompat.Button">
