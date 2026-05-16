@@ -10,7 +10,7 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.util.DisplayMetrics;
 import android.view.Display;
-import androidx.annotation.Nullable;
+import android.support.annotation.Nullable;
 import com.leapmotor.c11assistant.manager.ConfigManager;
 import com.leapmotor.c11assistant.ui.MainActivity;
 import org.json.JSONObject;
