@@ -10,7 +10,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.util.Log;
-import androidx.annotation.Nullable;
+import android.support.annotation.Nullable;
 import com.leapmotor.c11assistant.R;
 import com.leapmotor.c11assistant.manager.ActionExecutor;
 import com.leapmotor.c11assistant.manager.SharedPreferencesUtils;

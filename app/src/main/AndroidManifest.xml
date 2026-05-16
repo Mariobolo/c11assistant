@@ -34,7 +34,6 @@
 
         <service
             android:name=".service.C11ForegroundService"
-            android:foregroundServiceType="dataSync"
             android:enabled="true"
             android:exported="false" />
 
