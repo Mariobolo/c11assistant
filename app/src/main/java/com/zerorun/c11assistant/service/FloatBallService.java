@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import com.leapmotor.c11assistant.ui.MainActivity;
 
+@SuppressWarnings("deprecation")
 public class FloatBallService extends Service {
     private static final String CH = "c11_float";
     private WindowManager wm;

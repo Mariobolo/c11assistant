@@ -1,5 +1,6 @@
 package com.leapmotor.c11assistant.manager;
 
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -24,8 +25,14 @@ public class MultiScreenManager {
             Intent launch = app.getPackageManager().getLaunchIntentForPackage(packageName);
             if (launch == null) return false;
             launch.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) launch.setLaunchDisplayId(findSecondaryDisplayId());
-            app.startActivity(launch);
+            int displayId = findSecondaryDisplayId();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && displayId >= 0) {
+                ActivityOptions options = ActivityOptions.makeBasic();
+                options.setLaunchDisplayId(displayId);
+                app.startActivity(launch, options.toBundle());
+            } else {
+                app.startActivity(launch);
+            }
             return true;
         } catch (Exception e) { return false; }
     }
