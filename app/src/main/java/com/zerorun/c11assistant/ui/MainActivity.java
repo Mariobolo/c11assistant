@@ -20,6 +20,9 @@ import com.leapmotor.c11assistant.manager.ConfigManager;
 import com.leapmotor.c11assistant.model.ActionItem;
 import com.leapmotor.c11assistant.model.ScreenConfig;
 import com.leapmotor.c11assistant.service.C11ForegroundService;
+import com.leapmotor.c11assistant.service.FloatBallService;
+import com.leapmotor.c11assistant.service.LogcatMonitorService;
+import com.leapmotor.c11assistant.manager.MultiScreenManager;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.io.File;
@@ -54,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
         initActionList();
         selectTab(0);
         updateTime();
+        startService(new Intent(this, LogcatMonitorService.class));
+        if (sp.getBoolean("float_ball", true)) startService(new Intent(this, FloatBallService.class));
     }
 
     private void bindViews() {
@@ -92,7 +97,10 @@ public class MainActivity extends AppCompatActivity {
             showFeedback("后台服务已启动");
         });
         findViewById(R.id.btnQuick2).setOnClickListener(v -> runAction("主屏任务", 0));
-        findViewById(R.id.btnQuick3).setOnClickListener(v -> runAction("副屏任务", 1));
+        findViewById(R.id.btnQuick3).setOnClickListener(v -> {
+            boolean ok = MultiScreenManager.get(this).launchOnSecondary("com.android.launcher");
+            showFeedback(ok ? "副屏桌面已启动" : "副屏桌面启动失败");
+        });
         findViewById(R.id.btnQuick4).setOnClickListener(v -> {
             startActivity(new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName())));
             showFeedback("请在系统页面开启悬浮窗权限");
@@ -104,8 +112,8 @@ public class MainActivity extends AppCompatActivity {
     private void bindSettings() {
         setupSwitchItem(findViewById(R.id.itemAutoStart), getString(R.string.setting_auto_start), "auto_start", true);
         setupSwitchItem(findViewById(R.id.itemShowFeedback), getString(R.string.setting_show_feedback), "show_feedback", true);
-        setupSwitchItem(findViewById(R.id.itemLargeMode), getString(R.string.setting_large_touch), "large_mode", true);
-        setupSwitchItem(findViewById(R.id.itemSkipRunning), getString(R.string.setting_skip_running), "skip_running", false);
+        setupSwitchItem(findViewById(R.id.itemLargeMode), "启用悬浮球", "float_ball", true);
+        setupSwitchItem(findViewById(R.id.itemSkipRunning), "启用侧边手势", "edge_gesture", true);
     }
 
     private void setupSwitchItem(View itemView, String title, String key, boolean defaultValue) {

@@ -56,5 +56,20 @@
                 android:resource="@xml/accessibility_config" />
         </service>
 
+    
+        <service
+            android:name=".service.FloatBallService"
+            android:enabled="true"
+            android:exported="false" />
+
+        <receiver
+            android:name=".receiver.AutomationEventReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.leapmotor.c11assistant.EVENT_TRIGGERED" />
+            </intent-filter>
+        </receiver>
+
     </application>
 </manifest>
