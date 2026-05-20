@@ -37,11 +37,13 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvCurrentTab;
     private TextView tvStatusTime;
     private LinearLayout pageAbout;
+    private View pageHelp;
     private View pageQuick;
     private View pageSettings;
     private Button tabQuick;
     private Button tabSettings;
     private Button tabAbout;
+    private Button tabHelp;
     private SharedPreferences sp;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
@@ -68,27 +70,33 @@ public class MainActivity extends AppCompatActivity {
         pageQuick = findViewById(R.id.pageQuick);
         pageSettings = findViewById(R.id.pageSettings);
         pageAbout = findViewById(R.id.pageAbout);
+        pageHelp = findViewById(R.id.pageHelp);
         tabQuick = findViewById(R.id.tabQuick);
         tabSettings = findViewById(R.id.tabSettings);
         tabAbout = findViewById(R.id.tabAbout);
+        tabHelp = findViewById(R.id.tabHelp);
     }
 
     private void bindTabs() {
         tabQuick.setOnClickListener(v -> selectTab(0));
         tabSettings.setOnClickListener(v -> selectTab(1));
         tabAbout.setOnClickListener(v -> selectTab(2));
+        tabHelp.setOnClickListener(v -> selectTab(3));
     }
 
     private void selectTab(int tab) {
         tabQuick.setSelected(tab == 0);
         tabSettings.setSelected(tab == 1);
         tabAbout.setSelected(tab == 2);
+        tabHelp.setSelected(tab == 3);
         pageQuick.setVisibility(tab == 0 ? View.VISIBLE : View.GONE);
         pageSettings.setVisibility(tab == 1 ? View.VISIBLE : View.GONE);
         pageAbout.setVisibility(tab == 2 ? View.VISIBLE : View.GONE);
+        pageHelp.setVisibility(tab == 3 ? View.VISIBLE : View.GONE);
         if (tab == 0) tvCurrentTab.setText(R.string.tab_quick_actions);
         else if (tab == 1) tvCurrentTab.setText(R.string.tab_settings);
-        else tvCurrentTab.setText(R.string.tab_about);
+        else if (tab == 2) tvCurrentTab.setText(R.string.tab_about);
+        else tvCurrentTab.setText(R.string.tab_help);
     }
 
     private void bindQuickActions() {
@@ -112,8 +120,8 @@ public class MainActivity extends AppCompatActivity {
     private void bindSettings() {
         setupSwitchItem(findViewById(R.id.itemAutoStart), getString(R.string.setting_auto_start), "auto_start", true);
         setupSwitchItem(findViewById(R.id.itemShowFeedback), getString(R.string.setting_show_feedback), "show_feedback", true);
-        setupSwitchItem(findViewById(R.id.itemLargeMode), "启用悬浮球", "float_ball", true);
-        setupSwitchItem(findViewById(R.id.itemSkipRunning), "启用侧边手势", "edge_gesture", true);
+        setupSwitchItem(findViewById(R.id.itemLargeMode), getString(R.string.setting_float_ball), "float_ball", true);
+        setupSwitchItem(findViewById(R.id.itemSkipRunning), getString(R.string.setting_edge_gesture), "edge_gesture", true);
     }
 
     private void setupSwitchItem(View itemView, String title, String key, boolean defaultValue) {

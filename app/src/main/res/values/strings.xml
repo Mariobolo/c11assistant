@@ -5,6 +5,7 @@
     <string name="tab_quick_actions">快捷动作</string>
     <string name="tab_settings">设置</string>
     <string name="tab_about">关于</string>
+    <string name="tab_help">帮助</string>
 
     <string name="quick_start_service">启动后台服务</string>
     <string name="quick_exec_main">执行主屏任务</string>
@@ -19,6 +20,13 @@
 
     <string name="setting_auto_start">开机自动启动服务</string>
     <string name="setting_show_feedback">显示操作反馈提示</string>
-    <string name="setting_large_touch">增强触控模式</string>
-    <string name="setting_skip_running">跳过运行中应用</string>
+    <string name="setting_float_ball">启用悬浮球</string>
+    <string name="setting_edge_gesture">启用侧边手势</string>
+
+    <string name="help_install_title">安装指南</string>
+    <string name="help_install_content">1. 通过 adb install 或文件管理器安装 APK。\n2. 首次打开应用后保持前台运行，确认状态栏显示“系统就绪”。\n3. 如需开机后自动生效，请在“设置”页开启“开机自动启动服务”。</string>
+    <string name="help_permission_title">权限设置</string>
+    <string name="help_permission_content">路径：快捷动作 → 开启悬浮窗权限。\n在系统权限页中为本应用开启“悬浮窗/在其他应用上层显示”。\n建议同时将应用加入电池优化白名单，避免后台被清理。</string>
+    <string name="help_troubleshoot_title">常见故障</string>
+    <string name="help_troubleshoot_content">• 悬浮球不显示：检查“设置 → 启用悬浮球”是否开启，并重新授予悬浮窗权限。\n• 自动化无响应：确认后台服务已启动，且车机日志标签未被系统更新。\n• 开机后未自动运行：确认“设置 → 开机自动启动服务”开启，并检查车机自启动白名单。</string>
 </resources>
