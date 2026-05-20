@@ -49,6 +49,11 @@
             android:id="@+id/tabAbout"
             style="@style/Widget.C11.TabButton"
             android:text="@string/tab_about" />
+
+        <Button
+            android:id="@+id/tabHelp"
+            style="@style/Widget.C11.TabButton"
+            android:text="@string/tab_help" />
     </LinearLayout>
 
     <LinearLayout
@@ -159,6 +164,71 @@
 
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/about_text" android:textColor="@color/c11_text_primary" android:textSize="22sp" android:gravity="center"/>
         </LinearLayout>
+
+        <ScrollView
+            android:id="@+id/pageHelp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="12dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/help_install_title"
+                    android:textColor="@color/c11_text_primary"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/help_install_content"
+                    android:textColor="@color/c11_text_secondary"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/help_permission_title"
+                    android:textColor="@color/c11_text_primary"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/help_permission_content"
+                    android:textColor="@color/c11_text_secondary"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/help_troubleshoot_title"
+                    android:textColor="@color/c11_text_primary"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/help_troubleshoot_content"
+                    android:textColor="@color/c11_text_secondary"
+                    android:textSize="18sp" />
+            </LinearLayout>
+        </ScrollView>
 
         <TextView
             android:id="@+id/tvFeedback"
