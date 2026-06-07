@@ -25,7 +25,9 @@ public class C11CarControlManager {
     public static final String ACTION_TO_PHONE = "com.leapmotor.speech.tophone";
     public static final String ACTION_TO_SETTINGS = "com.leapmotor.speech.tosettings";
     public static final String ACTION_TO_SPEECH = "com.iflytek.autofly.sendToSpeech.message";
-    public static final String ACTION_VOICE_WARM_TIP = "com.iflytek.aufofly.warmtip";
+    public static final String ACTION_VOICE_WARM_TIP = "com.iflytek.autofly.warmtip";
+    public static final String ACTION_HAND_MESSAGE = "com.iflytek.autofly.handMessage";
+    public static final String PACKAGE_SPEECH_SERVICE = "com.leapmotor.leapmotoriflyspeechservice";
 
     public static final String GLOBAL_SPEECH_SPEAK = "SPEECH_SPEAK";
     public static final String GLOBAL_SECONDARY_DISPLAY_STATE = "display_1_state";
@@ -182,6 +184,23 @@ public class C11CarControlManager {
 
     public ActionExecutor.ActionResult backToHome() {
         return sendOfficialBroadcast("BACK_TO_HOME", ACTION_BACK_TO_HOME, (JSONObject) null);
+    }
+
+    public ActionExecutor.ActionResult setChildLock(boolean enabled) {
+        String operation = enabled ? "OPEN" : "CLOSE";
+        String jsonValue = "{\"semantic\":{\"name\":\"儿童锁\",\"operation\":\"" + operation + "\",\"service\":\"CAR_CONTROL\"},\"focus\":\"carControl\",\"messageType\":\"REQUEST\",\"needResponse\":\"YES\",\"operationApp\":\"speech\",\"protocolId\":0,\"requestCode\":\"10039\",\"statusCode\":0,\"version\":\"v1.0\"}";
+        try {
+            Intent intent = new Intent(ACTION_HAND_MESSAGE);
+            intent.setPackage(PACKAGE_SPEECH_SERVICE);
+            intent.putExtra("value", jsonValue);
+            app.sendBroadcast(intent);
+            return ActionExecutor.ActionResult.ok("CHILD_LOCK", "child lock " + operation.toLowerCase());
+        } catch (SecurityException e) {
+            Log.w(TAG, "child lock broadcast permission denied", e);
+            return ActionExecutor.ActionResult.failed("CHILD_LOCK", "permission denied: " + e.getMessage());
+        } catch (Exception e) {
+            return ActionExecutor.ActionResult.failed("CHILD_LOCK", e.getMessage());
+        }
     }
 
     public ActionExecutor.ActionResult sendOfficialBroadcast(String name, String action, String extraName, int value) {

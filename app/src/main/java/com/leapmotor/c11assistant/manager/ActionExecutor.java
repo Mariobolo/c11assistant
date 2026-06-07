@@ -100,9 +100,12 @@ public class ActionExecutor {
                 case "AROUND_TOGGLE_VIEW":
                     return aroundToggle(app, args);
                 case "CHILD_LOCK_ON":
-                    return carCommand(app, normalized, args, true);
+                    return new C11CarControlManager(app).setChildLock(true);
                 case "CHILD_LOCK_OFF":
-                    return carCommand(app, normalized, args, false);
+                    return new C11CarControlManager(app).setChildLock(false);
+                case "SPEECH_SPEAK":
+                case "SPEAK":
+                    return speechSpeak(app, firstNonEmpty(args.optString("text"), payload));
                 case "SET_GLOBAL_INT":
                 case "CAR_GLOBAL_SET":
                     return new C11CarControlManager(app).putGlobalInt(args.optString("key", args.optString("globalKey", "")), args.optInt("value", 0));
@@ -487,7 +490,7 @@ public class ActionExecutor {
 
     private static String shellEscapeInputText(String text) {
         if (text == null) return "";
-        return text.replace(" ", "%s").replace("'", "\\'");
+        return text.replace("'", "\\'");
     }
 
     private static String firstNonEmpty(String... values) {
@@ -496,6 +499,19 @@ public class ActionExecutor {
             if (!TextUtils.isEmpty(value)) return value;
         }
         return "";
+    }
+
+    private static ActionResult speechSpeak(Context app, String text) {
+        if (TextUtils.isEmpty(text)) {
+            return ActionResult.failed("SPEECH_SPEAK", "text empty");
+        }
+        try {
+            TtsManager.get(app).speak(text);
+            return ActionResult.ok("SPEECH_SPEAK", text);
+        } catch (Exception e) {
+            Log.e(TAG, "speech speak failed", e);
+            return ActionResult.failed("SPEECH_SPEAK", e.getMessage());
+        }
     }
 
     public static class ActionResult {
