@@ -59,7 +59,49 @@ public class ConfigManager {
             root.put("bootDelaySec", 15);
             root.put("globalCloseButton", true);
             root.put("skipRunningExceptions", new JSONArray());
-            root.put("screens", new JSONArray());
+
+            JSONArray actions = new JSONArray();
+            actions.put(new JSONObject()
+                    .put("id", "返回")
+                    .put("type", "GLOBAL_BACK")
+                    .put("enabled", true));
+            actions.put(new JSONObject()
+                    .put("id", "打开导航")
+                    .put("type", "OPEN_NAVIGATION")
+                    .put("packageName", "com.autonavi.minimap")
+                    .put("delayMs", 300));
+            actions.put(new JSONObject()
+                    .put("id", "最大制冷")
+                    .put("type", "HVAC_AC_MAX_ON")
+                    .put("delayMs", 100));
+            actions.put(new JSONObject()
+                    .put("id", "经济驾驶模式")
+                    .put("type", "SET_DRIVER_MODE")
+                    .put("mode", 4));
+            actions.put(new JSONObject()
+                    .put("id", "导航音量60")
+                    .put("type", "SET_C11_NAVI_VOLUME")
+                    .put("value", 60));
+
+            JSONArray screens = new JSONArray();
+            screens.put(new JSONObject()
+                    .put("displayId", -1)
+                    .put("label", "副屏")
+                    .put("actions", actions));
+            root.put("screens", screens);
+
+            JSONArray automationRules = new JSONArray();
+            automationRules.put(new JSONObject()
+                    .put("id", "wheel_360_custom")
+                    .put("enabled", true)
+                    .put("event", "WHEEL_360")
+                    .put("priority", 120)
+                    .put("conflictGroup", "around")
+                    .put("actions", new JSONArray().put(new JSONObject()
+                            .put("id", "toggle_around")
+                            .put("type", "AROUND_TOGGLE_VIEW")
+                            .put("retryCount", 1))));
+            root.put("automationRules", automationRules);
         } catch (Exception ignored) {}
         return root;
     }

@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import com.leapmotor.c11assistant.R;
+import com.leapmotor.c11assistant.manager.ActionSequenceExecutor;
 import com.leapmotor.c11assistant.manager.ConfigManager;
 import com.leapmotor.c11assistant.model.ActionItem;
 import com.leapmotor.c11assistant.model.ScreenConfig;
@@ -175,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void runCustomAction(ActionItem item) {
-        // TODO: 在这里扩展高德地图联动、车机指令执行等业务逻辑
+        ActionSequenceExecutor.executeNow(this, item);
         showFeedback("执行动作: " + item.id);
     }
 

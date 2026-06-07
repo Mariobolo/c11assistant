@@ -204,3 +204,118 @@ sdk.dir=/path/to/Android/Sdk
 - 项目固定为 Android Support 体系，不可混用 AndroidX。
 - 车机 ROM 对后台与权限策略可能有定制，建议在实车中完成权限白名单配置。
 - 自动化规则依赖车机日志格式，若系统升级导致日志字段变化，需要同步更新匹配规则。
+
+---
+
+## 10. 动作执行系统
+
+`ActionExecutor` 现在提供统一的 `executeWithResult(Context, action, payload)` 入口，返回包含成功状态、动作名、状态码和原因的 `ActionResult`。已实现的主要动作：
+
+- 系统控制：`GLOBAL_BACK`、`GLOBAL_HOME`、`GLOBAL_RECENTS`、`GLOBAL_POWER`
+- 音量/媒体：`VOLUME_UP`、`VOLUME_DOWN`、`VOLUME_MUTE`、`MEDIA_NEXT`、`MEDIA_PREVIOUS`、`MEDIA_PLAY_PAUSE`
+- 亮度：`BRIGHTNESS_UP`、`BRIGHTNESS_DOWN`（无 `WRITE_SETTINGS` 时会跳转授权页）
+- 应用：`LAUNCH_PACKAGE`、`LAUNCH_ON_DISPLAY`、`LAUNCH_FREEFORM`、`BRING_TO_FRONT`
+- 车机场景：`CHILD_LOCK_ON`、`CHILD_LOCK_OFF`、`AROUND_TOGGLE_VIEW`、`OPEN_SETTINGS`、`OPEN_MUSIC`、`OPEN_NAVIGATION`
+- 高级交互：`CLICK_AT_POSITION`、`SWIPE_GESTURE`、`LONG_PRESS`、`INPUT_TEXT`
+- 降级/扩展：`BROADCAST`、`SHELL`、`ROOT_SHELL`
+
+无障碍服务可用时优先通过无障碍全局动作与手势执行；不可用时，部分动作会降级到 `input keyevent/tap/swipe/text` shell 命令。车机深度指令默认以广播/可配置 shell 命令形式接入，实际 ROM 若需要私有服务或系统签名接口，可在 JSON 中覆盖 `broadcastAction`、`targetPackage`、`command` 或 `payload`。
+
+## 11. 配置驱动示例
+
+`c11_config.json` 可使用 `screens[].actions` 或顶层 `actions` 定义动作序列，`automationRules` 定义事件触发规则：
+
+```json
+{
+  "screens": [
+    {
+      "displayId": -1,
+      "label": "副屏",
+      "actions": [
+        { "id": "打开高德", "type": "LAUNCH_ON_DISPLAY", "packageName": "com.autonavi.minimap", "delayMs": 300 },
+        { "id": "点击搜索", "type": "CLICK_AT_POSITION", "x": 120, "y": 80, "retryCount": 1 },
+        { "id": "输入目的地", "type": "INPUT_TEXT", "text": "回家", "delayMs": 200 },
+        { "id": "上滑列表", "type": "SWIPE_GESTURE", "startX": 900, "startY": 520, "endX": 900, "endY": 180, "durationMs": 450 }
+      ]
+    }
+  ],
+  "automationRules": [
+    {
+      "id": "reverse_open_around",
+      "enabled": true,
+      "event": "GEAR_R",
+      "priority": 100,
+      "conflictGroup": "camera",
+      "debounceMs": 800,
+      "actions": [
+        { "id": "open_360", "type": "AROUND_TOGGLE_VIEW", "retryCount": 1 }
+      ]
+    }
+  ]
+}
+```
+
+动作通用字段：
+
+- `enabled`：是否启用
+- `delayMs`：执行前延迟
+- `retryCount` / `retryDelayMs`：失败重试
+- `stopOnFailure`：序列失败时停止后续动作
+- `conditionScene` / `conditionPackage`：仅当当前无障碍识别场景或包名匹配时执行
+- `payload`：任意 JSON，会合并到动作 payload 中
+
+## 12. 零跑 C11 官方接口接入
+
+本项目新增 `C11CarControlManager` 统一封装零跑 C11 官方原生接口，优先使用无需 root 的两类接口：
+
+1. `Settings.Global` 属性：例如 `C11_MUSIC`、`C11_NAVI`、`strCar1409`、`strCar1800`。
+2. 零跑 speech/IVI 广播：例如 `com.leapmotor.speech.toairconditioner`、`com.leapmotor.speech.tocarcontrol`、`com.leapmotor.speech.tosettings`。
+
+> 注意：这些接口虽然无需 root，但部分 ROM 仍要求系统签名、`WRITE_SECURE_SETTINGS` 或零跑专属广播权限。普通第三方 APK 如权限不足，`ActionResult` 会返回失败原因；请在系统签名包或授权环境中验证。
+
+### 12.1 常用动作类型
+
+- 全局属性：`SET_GLOBAL_INT` / `GET_GLOBAL_INT`
+- 音量：`SET_C11_MUSIC_VOLUME`、`SET_C11_NAVI_VOLUME`、`SET_C11_CALL_VOLUME`
+- 空调：`HVAC_PANEL_ON/OFF`、`SET_HVAC_DRIVER_TEMP`、`SET_HVAC_PASSENGER_TEMP`、`HVAC_AC_MAX_ON/OFF`
+- 氛围灯：`AMBIENT_LIGHT_ON/OFF`、`SET_AMBIENT_COLOR`
+- 设置：`DAY_MODE`、`NIGHT_MODE`、`WIFI_ON/OFF`、`BLUETOOTH_ON/OFF`
+- 灯光：`LOW_BEAM_ON/OFF`、`REAR_FOG_ON/OFF`、`POSITION_LIGHT_ON/OFF`、`PEDESTRIANS_ALERT_ON/OFF`
+- 驾驶/场景：`SET_DRIVER_MODE`、`GUARD_MODE_ON/OFF`、`REST_MODE_ON/OFF`、`CAMPING_MODE_ON/OFF`、`POWER_SAVE_MODE_ON/OFF`、`SENTINEL_MODE_ON/OFF`
+- 信息页：`JOURNEY_ENERGY`、`VEHICLE_HEALTH`
+- 原始官方广播：`OFFICIAL_BROADCAST`
+
+### 12.2 JSON 示例
+
+```json
+{
+  "actions": [
+    { "id": "主驾24度", "type": "SET_HVAC_DRIVER_TEMP", "value": 24 },
+    { "id": "最大制冷", "type": "HVAC_AC_MAX_ON" },
+    { "id": "运动模式", "type": "SET_DRIVER_MODE", "mode": 1 },
+    { "id": "蓝色氛围灯", "type": "SET_AMBIENT_COLOR", "value": 14 },
+    {
+      "id": "自定义官方广播",
+      "type": "OFFICIAL_BROADCAST",
+      "broadcastAction": "com.leapmotor.speech.tocarcontrol",
+      "payload": {
+        "extras": { "REST_MODE": 1 }
+      }
+    }
+  ]
+}
+```
+
+### 12.3 ADB 快速验证
+
+```bash
+adb shell settings put global C11_NAVI 60
+adb shell settings put global strCar1409 24
+adb shell am broadcast -a com.leapmotor.speech.toairconditioner --ei HVACACMAXREQ 1
+adb shell am broadcast -a com.leapmotor.speech.tocarcontrol --ei MMI_DRIVER_MODE_SET 4
+adb shell am broadcast -a com.leapmotor.speech.tosettings --ei bluetooth 1
+```
+
+### 12.4 未有官方定义的能力
+
+当前官方提取文档未提供童锁接口。因此 `CHILD_LOCK_ON/OFF` 不再默认发送虚构的应用内部广播；如实车抓包得到对应 `Settings.Global` key 或官方广播 extra，可在配置中通过 `globalKey` 或 `broadcastAction` + `extras` 接入。

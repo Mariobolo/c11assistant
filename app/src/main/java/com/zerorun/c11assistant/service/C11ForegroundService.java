@@ -11,9 +11,15 @@ import android.os.Looper;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.support.annotation.Nullable;
+import com.leapmotor.c11assistant.manager.ActionSequenceExecutor;
 import com.leapmotor.c11assistant.manager.ConfigManager;
+import com.leapmotor.c11assistant.model.ActionItem;
+import com.leapmotor.c11assistant.model.ScreenConfig;
 import com.leapmotor.c11assistant.ui.MainActivity;
+import org.json.JSONArray;
 import org.json.JSONObject;
+import java.util.ArrayList;
+import java.util.List;
 
 public class C11ForegroundService extends Service {
     private static final String CHANNEL = "c11_bg";
@@ -47,14 +53,30 @@ public class C11ForegroundService extends Service {
     }
 
     private void executeForDisplay(int targetDisplay) {
+        JSONObject cfg = new ConfigManager(this).load();
+        List<ActionItem> actions = new ArrayList<>();
+        JSONArray screens = cfg.optJSONArray("screens");
+        if (screens != null) {
+            for (int i = 0; i < screens.length(); i++) {
+                JSONObject screenJson = screens.optJSONObject(i);
+                if (screenJson == null) continue;
+                ScreenConfig screen = ScreenConfig.fromJson(screenJson);
+                if (targetDisplay != -1 && screen.displayId != -1 && screen.displayId != targetDisplay) continue;
+                actions.addAll(screen.actions);
+            }
+        }
+        if (actions.isEmpty()) actions.addAll(ActionSequenceExecutor.actionsFromConfig(cfg));
+        if (!actions.isEmpty()) ActionSequenceExecutor.executeSequence(this, actions);
+
         DisplayManager dm = getSystemService(DisplayManager.class);
+        if (dm == null) return;
         for (Display d : dm.getDisplays()) {
             if (targetDisplay != -1 && d.getDisplayId() != targetDisplay) continue;
             DisplayMetrics m = new DisplayMetrics();
             d.getRealMetrics(m);
-            // 预置副屏参考分辨率: 1920x720，可作为固定窗口默认坐标系
-            if (m.widthPixels == 1920 && m.heightPixels == 720) { /* 副屏 */ }
-            // TODO: 读取对应动作列表并执行: 系统控制/启动App/悬浮图
+            if (m.widthPixels == 1920 && m.heightPixels == 720) {
+                android.util.Log.i("C11ForegroundService", "detected C11 secondary display: " + d.getDisplayId());
+            }
         }
     }
 
