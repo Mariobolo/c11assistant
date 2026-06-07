@@ -12,6 +12,7 @@ import java.util.Iterator;
 
 public class C11CarControlManager {
     private static final String TAG = "C11CarControlManager";
+    private static C11CarControlManager instance;
 
     public static final String ACTION_SETTING = "com.leapmotor.speech.setting";
     public static final String ACTION_TO_AIR_CONDITIONER = "com.leapmotor.speech.toairconditioner";
@@ -43,8 +44,15 @@ public class C11CarControlManager {
 
     private final Context app;
 
-    public C11CarControlManager(Context context) {
+    private C11CarControlManager(Context context) {
         this.app = context.getApplicationContext();
+    }
+
+    public static synchronized C11CarControlManager getInstance(Context context) {
+        if (instance == null) {
+            instance = new C11CarControlManager(context);
+        }
+        return instance;
     }
 
     public ActionExecutor.ActionResult putGlobalInt(String key, int value) {

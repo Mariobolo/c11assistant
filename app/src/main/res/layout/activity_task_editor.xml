@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:background="@color/colorPrimary">
+
+        <Button
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="返回"
+            android:textColor="@android:color/white"
+            android:background="@android:color/transparent"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="编辑任务"
+            android:textSize="20sp"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:gravity="center"/>
+
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="保存"
+            android:textColor="@android:color/white"
+            android:background="@android:color/transparent"/>
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="基础信息"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                android:layout_marginBottom="12dp"/>
+
+            <EditText
+                android:id="@+id/et_task_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="任务名称"
+                android:textSize="16sp"
+                android:inputType="text"/>
+
+            <EditText
+                android:id="@+id/et_task_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="任务描述（可选）"
+                android:textSize="14sp"
+                android:inputType="textMultiLine"
+                android:layout_marginTop="8dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="12dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="优先级"
+                        android:textSize="14sp"
+                        android:textColor="@color/grey"/>
+
+                    <EditText
+                        android:id="@+id/et_priority"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="100"
+                        android:textSize="16sp"
+                        android:inputType="number"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="防抖时间(ms)"
+                        android:textSize="14sp"
+                        android:textColor="@color/grey"/>
+
+                    <EditText
+                        android:id="@+id/et_debounce"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="500"
+                        android:textSize="16sp"
+                        android:inputType="number"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="触发条件"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="12dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@color/grey_light"
+                android:padding="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="条件模式："
+                    android:textSize="14sp"/>
+
+                <RadioGroup
+                    android:id="@+id/rg_condition_mode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rb_any"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="任一满足"
+                        android:checked="true"/>
+
+                    <RadioButton
+                        android:id="@+id/rb_all"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="全部满足"
+                        android:layout_marginLeft="16dp"/>
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/btn_add_trigger"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="添加触发条件"
+                    android:textSize="14sp"
+                    android:layout_marginTop="8dp"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_triggers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="动作序列"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="12dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/btn_add_action"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="添加动作"
+                    android:textSize="14sp"
+                    android:layout_marginTop="8dp"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_actions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

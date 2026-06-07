@@ -100,9 +100,9 @@ public class ActionExecutor {
                 case "AROUND_TOGGLE_VIEW":
                     return aroundToggle(app, args);
                 case "CHILD_LOCK_ON":
-                    return new C11CarControlManager(app).setChildLock(true);
+                    return C11CarControlManager.getInstance(app).setChildLock(true);
                 case "CHILD_LOCK_OFF":
-                    return new C11CarControlManager(app).setChildLock(false);
+                    return C11CarControlManager.getInstance(app).setChildLock(false);
                 case "SPEECH_SPEAK":
                 case "SPEAK":
                     return speechSpeak(app, firstNonEmpty(args.optString("text"), payload));

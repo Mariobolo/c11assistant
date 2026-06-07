@@ -11,8 +11,8 @@
     <string name="quick_exec_main">执行主屏任务</string>
     <string name="quick_exec_sub">执行副屏任务</string>
     <string name="quick_overlay">开启悬浮窗权限</string>
-    <string name="quick_export">导出配置</string>
-    <string name="quick_import">导入配置</string>
+    <string name="quick_tasks">任务管理</string>
+    <string name="quick_logs">日志查看</string>
 
     <string name="full_action_list">完整动作列表</string>
     <string name="ready">系统就绪，等待操作</string>

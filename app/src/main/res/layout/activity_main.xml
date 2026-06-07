@@ -111,8 +111,8 @@
                     <Button android:id="@+id/btnQuick2" style="@style/Widget.C11.QuickButton" android:text="@string/quick_exec_main" />
                     <Button android:id="@+id/btnQuick3" style="@style/Widget.C11.QuickButton" android:text="@string/quick_exec_sub" />
                     <Button android:id="@+id/btnQuick4" style="@style/Widget.C11.QuickButton" android:text="@string/quick_overlay" />
-                    <Button android:id="@+id/btnQuick5" style="@style/Widget.C11.QuickButton" android:text="@string/quick_export" />
-                    <Button android:id="@+id/btnQuick6" style="@style/Widget.C11.QuickButton" android:text="@string/quick_import" />
+                    <Button android:id="@+id/btnQuick5" style="@style/Widget.C11.QuickButton" android:text="@string/quick_tasks" />
+                    <Button android:id="@+id/btnQuick6" style="@style/Widget.C11.QuickButton" android:text="@string/quick_logs" />
                 </android.support.v7.widget.GridLayout>
 
                 <TextView

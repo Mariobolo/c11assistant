@@ -11,30 +11,40 @@ app/src/main/java/com/leapmotor/c11assistant/
 │   ├── ActionSequenceExecutor.java # 动作序列执行器
 │   ├── AutomationManager.java # 自动化规则管理
 │   ├── CarControlManager.java # 官方车控接口封装
-│   ├── CarEventProcessor.java # 车辆事件处理器 (新增)
+│   ├── CarEventProcessor.java # 车辆事件处理器
 │   ├── ConfigManager.java     # 配置文件管理
+│   ├── LogCollector.java      # 日志收集器 (新增)
 │   ├── MultiScreenManager.java # 多屏管理
 │   ├── SharedPreferencesUtils.java # 偏好设置工具
-│   ├── TaskManager.java       # 自定义任务管理器 (新增)
-│   └── TtsManager.java        # 讯飞TTS管理器 (新增)
+│   ├── TaskManager.java       # 自定义任务管理器
+│   └── TtsManager.java        # 讯飞TTS管理器
 ├── model/                     # 数据模型层
-│   ├── Action.java            # 动作数据模型 (新增)
+│   ├── Action.java            # 动作数据模型
 │   ├── ActionItem.java        # 动作项模型
-│   ├── CarEvent.java          # 车辆事件枚举 (新增)
+│   ├── BuiltInRule.java       # 内置规则数据模型 (新增)
+│   ├── CarEvent.java          # 车辆事件枚举
+│   ├── LogEntry.java          # 日志条目模型 (新增)
 │   ├── ScreenConfig.java      # 屏幕配置
-│   ├── Task.java              # 自定义任务数据模型 (新增)
-│   └── Trigger.java           # 触发条件数据模型 (新增)
+│   ├── Task.java              # 自定义任务数据模型
+│   └── Trigger.java           # 触发条件数据模型
 ├── service/                   # 服务层
 │   ├── C11AccessibilityService.java # 无障碍服务
 │   ├── C11ForegroundService.java    # 前台服务保活
 │   ├── FloatBallService.java         # 悬浮球服务
-│   └── LogcatMonitorService.java     # Logcat监听服务 (已增强)
+│   └── LogcatMonitorService.java     # Logcat监听服务
 ├── receiver/                  # 广播接收层
 │   ├── AutomationEventReceiver.java # 自动化事件接收器
 │   └── BootReceiver.java      # 开机自启动接收器
 └── ui/                       # 用户界面层
     ├── ActionAdapter.java     # 动作列表适配器
-    └── MainActivity.java      # 主界面
+    ├── BuiltInRuleAdapter.java # 内置规则列表适配器 (新增)
+    ├── LogAdapter.java        # 日志列表适配器 (新增)
+    ├── MainActivity.java      # 主界面
+    ├── PermissionGuideActivity.java # 权限引导界面 (新增)
+    ├── TaskAdapter.java       # 任务列表适配器 (新增)
+    ├── TaskEditorActivity.java # 任务编辑界面 (新增)
+    ├── TaskListActivity.java  # 任务列表界面 (新增)
+    └── LogViewerActivity.java # 日志查看界面 (新增)
 ```
 
 ## 核心模块说明
@@ -210,13 +220,19 @@ taskManager.createSampleTasks();
   - [x] 创建动作模型 `Action.java`
   - [x] 实现任务管理器 `TaskManager.java`
   - [x] 集成任务执行引擎到 `CarEventProcessor`
-- [ ] 实现任务列表界面 `TaskListActivity.java`
-- [ ] 实现任务编辑界面 `TaskEditorActivity.java`
 - [x] 优化360环视逻辑，支持左右转向切换对应视角
 - [x] 完善童锁控制逻辑（基于官方广播）
-- [ ] 添加日志查看和调试功能
-- [ ] 实现内置规则的可视化管理
-- [ ] 实现权限引导界面
+- [x] 修复代码问题：
+  - [x] 修正 `ACTION_VOICE_WARM_TIP` 常量拼写错误 (aufofly → autofly)
+  - [x] 实现 `CHILD_LOCK_ON/OFF` 动作的官方广播接口
+  - [x] 修复 `shellEscapeInputText` 方法中的空格转义错误
+- [ ] 实现任务列表界面 `TaskListActivity.java`（进行中）
+- [ ] 实现任务编辑界面 `TaskEditorActivity.java`
+- [ ] 添加日志查看和调试功能 (`LogCollector.java`, `LogViewerActivity.java`)
+- [ ] 实现内置规则的可视化管理 (`BuiltInRule.java`)
+- [ ] 实现权限引导界面 (`PermissionGuideActivity.java`)
+- [ ] 应用保活与异常恢复优化
+- [ ] 车机环境适配和性能优化
 
 ### 第三阶段：高级功能 (待开发)
 

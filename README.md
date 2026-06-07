@@ -13,7 +13,7 @@ C11 Assistant 是面向零跑 C11 车机场景的 Android 9（API 28）辅助应
 ## 2. 当前代码结构
 
 ### 2.1 核心入口
-- `app/src/main/java/com/zerorun/c11assistant/ui/MainActivity.java`
+- `app/src/main/java/com/leapmotor/c11assistant/ui/MainActivity.java`
   - 主界面（快捷动作 / 设置 / 关于 / 帮助）
   - 应用启动时拉起 `LogcatMonitorService`
   - 根据开关拉起 `FloatBallService`
@@ -53,14 +53,42 @@ C11 Assistant 是面向零跑 C11 车机场景的 Android 9（API 28）辅助应
 - `SharedPreferencesUtils`
   - 统一开关与参数存储
 - `ActionExecutor`
-  - 执行动作统一出口（当前包含基础动作实现）
+  - 执行动作统一出口
+- `TaskManager`
+  - 自定义任务管理器
+  - 负责任务的加载、保存、匹配和执行
+- `C11CarControlManager`
+  - 零跑C11官方车控接口封装
+- `TtsManager`
+  - 讯飞TTS语音播报管理器
+- `CarEventProcessor`
+  - 车辆事件处理器
+- `LogCollector`
+  - 日志收集器（待实现）
 
 ### 2.5 模型（Model）
 - `ScreenConfig`
   - 屏幕配置模型
-  - 提供 `fromJson(JSONObject)` 反序列化能力
 - `ActionItem`
   - 动作项模型
+- `CarEvent`
+  - 车辆事件枚举（支持30+种车辆状态）
+- `Task`
+  - 自定义任务数据模型
+- `Trigger`
+  - 触发条件模型（支持日志事件、属性变化、时间、应用状态）
+- `Action`
+  - 动作模型（支持语音、系统控制、启动应用等）
+
+### 2.6 用户界面（UI）
+- `TaskListActivity`（待实现）
+  - 自定义任务列表界面
+- `TaskEditorActivity`（待实现）
+  - 可视化任务编辑界面
+- `LogViewerActivity`（待实现）
+  - 日志查看和调试界面
+- `PermissionGuideActivity`（待实现）
+  - 权限引导界面
 
 ---
 
@@ -106,7 +134,30 @@ C11 Assistant 是面向零跑 C11 车机场景的 Android 9（API 28）辅助应
   - 打开 360 全景
   - 打开设置
 
-### 3.4 副屏能力
+### 3.4 自定义任务系统
+`TaskManager` 提供自定义自动化任务功能：
+- **触发条件类型**：
+  - 日志事件触发（如档位变化、车门状态、转向灯等）
+  - 系统属性变化触发（如车辆上锁、屏幕熄灭）
+  - 时间触发（如每天固定时间、定时任务）
+  - 应用启动/关闭触发
+- **动作类型**：
+  - 语音播报（TTS）
+  - 系统属性设置（温度、灯光、氛围灯等）
+  - 发送系统广播（打开近光灯、切换驾驶模式）
+  - 启动应用（360环视、高德地图）
+  - UI交互（点击位置、手势操作）
+  - 延迟执行（100ms-10000ms）
+- **任务管理**：
+  - 支持启用/禁用任务
+  - 支持任务优先级设置
+  - 支持防抖时间配置
+  - 支持任务导入/导出
+- **持久化**：
+  - 任务以JSON格式保存到 `/sdcard/C11Assistant/tasks/`
+  - 应用启动时自动加载所有任务
+
+### 3.5 副屏能力
 `MultiScreenManager` 提供：
 - 副屏 displayId 探测
 - 指定应用拉起到副屏
@@ -316,6 +367,16 @@ adb shell am broadcast -a com.leapmotor.speech.tocarcontrol --ei MMI_DRIVER_MODE
 adb shell am broadcast -a com.leapmotor.speech.tosettings --ei bluetooth 1
 ```
 
-### 12.4 未有官方定义的能力
+### 12.4 童锁控制接口
 
-当前官方提取文档未提供童锁接口。因此 `CHILD_LOCK_ON/OFF` 不再默认发送虚构的应用内部广播；如实车抓包得到对应 `Settings.Global` key 或官方广播 extra，可在配置中通过 `globalKey` 或 `broadcastAction` + `extras` 接入。
+童锁控制使用讯飞语音服务的官方广播接口：
+
+```bash
+# 开启童锁
+adb shell am broadcast -a com.iflytek.autofly.handMessage -p com.leapmotor.leapmotoriflyspeechservice --es value '{"semantic":{"name":"儿童锁","operation":"OPEN","service":"CAR_CONTROL"},"focus":"carControl","messageType":"REQUEST","needResponse":"YES","operationApp":"speech","protocolId":0,"requestCode":"10039","statusCode":0,"version":"v1.0"}'
+
+# 关闭童锁
+adb shell am broadcast -a com.iflytek.autofly.handMessage -p com.leapmotor.leapmotoriflyspeechservice --es value '{"semantic":{"name":"儿童锁","operation":"CLOSE","service":"CAR_CONTROL"},"focus":"carControl","messageType":"REQUEST","needResponse":"YES","operationApp":"speech","protocolId":0,"requestCode":"10039","statusCode":0,"version":"v1.0"}'
+```
+
+`CHILD_LOCK_ON/OFF` 动作现在通过 `C11CarControlManager.setChildLock()` 实现，使用上述官方广播接口。

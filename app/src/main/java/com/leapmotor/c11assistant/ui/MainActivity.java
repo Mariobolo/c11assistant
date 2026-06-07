@@ -114,8 +114,12 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName())));
             showFeedback("请在系统页面开启悬浮窗权限");
         });
-        findViewById(R.id.btnQuick5).setOnClickListener(v -> exportConfig());
-        findViewById(R.id.btnQuick6).setOnClickListener(v -> importConfig());
+        findViewById(R.id.btnQuick5).setOnClickListener(v -> {
+            startActivity(new Intent(MainActivity.this, TaskListActivity.class));
+        });
+        findViewById(R.id.btnQuick6).setOnClickListener(v -> {
+            Toast.makeText(MainActivity.this, "日志查看功能开发中", Toast.LENGTH_SHORT).show();
+        });
     }
 
     private void bindSettings() {

@@ -25,6 +25,16 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".ui.TaskListActivity"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+
+        <activity
+            android:name=".ui.TaskEditorActivity"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+
         <receiver
             android:name=".receiver.BootReceiver"
             android:enabled="true"

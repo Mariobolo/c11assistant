@@ -28,8 +28,8 @@ public enum CarEvent {
     HOOD_CLOSE("HOOD_CLOSE", "前机盖关闭", "C11CarSomeIp", "eventId: 9128 value: 0"),
 
     // ====== 锁车状态事件 ======
-    VEHICLE_UNLOCK("VEHICLE_UNLOCK", "车辆解锁", "C11CarSomeIp", "eventid: 1200 msg: 0"),
-    VEHICLE_LOCK("VEHICLE_LOCK", "车辆上锁", "C11CarSomeIp", "eventid: 1200 msg: 1"),
+    VEHICLE_UNLOCK("VEHICLE_UNLOCK", "车辆解锁", "C11CarSomeIp", "eventId: 1200 msg: 0"),
+    VEHICLE_LOCK("VEHICLE_LOCK", "车辆上锁", "C11CarSomeIp", "eventId: 1200 msg: 1"),
 
     // ====== 灯光状态事件 ======
     TURN_LEFT_ON("TURN_LEFT_ON", "左转灯开启", "C11CarSomeIp", "turnLeft value: 1"),
@@ -138,7 +138,6 @@ public enum CarEvent {
             "LPSysUI.AppStatisticsUtil",
             "MediaTlog-CtrlService",
             "BtMusicManager",
-            "TripService",
             "AutomationManager"
         };
     }
