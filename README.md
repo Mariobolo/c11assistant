@@ -81,10 +81,12 @@ C11 Assistant 是面向零跑 C11 车机场景的 Android 9（API 28）辅助应
   - 动作模型（支持语音、系统控制、启动应用等）
 
 ### 2.6 用户界面（UI）
-- `TaskListActivity`（待实现）
-  - 自定义任务列表界面
-- `TaskEditorActivity`（待实现）
-  - 可视化任务编辑界面
+- `TaskListActivity`
+  - 自定义任务列表界面，支持新建、编辑、删除、复制、导入、导出任务
+- `TaskEditorActivity`
+  - 可视化任务编辑界面，支持配置触发条件和动作序列
+- `TaskAdapter`
+  - 任务列表适配器
 - `LogViewerActivity`（待实现）
   - 日志查看和调试界面
 - `PermissionGuideActivity`（待实现）

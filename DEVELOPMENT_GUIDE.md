@@ -226,8 +226,12 @@ taskManager.createSampleTasks();
   - [x] 修正 `ACTION_VOICE_WARM_TIP` 常量拼写错误 (aufofly → autofly)
   - [x] 实现 `CHILD_LOCK_ON/OFF` 动作的官方广播接口
   - [x] 修复 `shellEscapeInputText` 方法中的空格转义错误
-- [ ] 实现任务列表界面 `TaskListActivity.java`（进行中）
-- [ ] 实现任务编辑界面 `TaskEditorActivity.java`
+  - [x] 修复 `getAllLogTags` 重复添加 TripService 问题
+  - [x] 修复 `VEHICLE_UNLOCK/LOCK` eventId 大小写不一致问题
+  - [x] `C11CarControlManager` 添加单例模式
+- [x] 实现任务列表界面 `TaskListActivity.java`
+- [x] 实现任务编辑界面 `TaskEditorActivity.java`
+- [x] 实现任务导入/导出功能
 - [ ] 添加日志查看和调试功能 (`LogCollector.java`, `LogViewerActivity.java`)
 - [ ] 实现内置规则的可视化管理 (`BuiltInRule.java`)
 - [ ] 实现权限引导界面 (`PermissionGuideActivity.java`)
